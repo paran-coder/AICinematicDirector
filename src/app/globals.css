@@ -329,3 +329,17 @@ html,body{height:100%;overflow:hidden}.app-shell{height:100dvh;min-height:0;disp
   .generation-preview .stage-heading h1,
   .workspace-header h1{font-size:22px}
 }
+
+/* Character reference truthfulness */
+.reference-note{
+  margin:9px 0 0;
+  color:var(--text-3);
+  font-size:11px;
+  line-height:1.5;
+}
+.reference-grid article>span{
+  font-size:11px;
+  line-height:1.35;
+  font-weight:500;
+  color:var(--text-2);
+}
