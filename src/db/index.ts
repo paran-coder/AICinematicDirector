@@ -5,13 +5,17 @@ import * as schema from "./schema";
 let client: ReturnType<typeof postgres> | undefined;
 let database: PostgresJsDatabase<typeof schema> | undefined;
 
+export function getDatabaseUrl(): string | undefined {
+  return process.env.DATABASE_URL?.trim() || process.env.POSTGRES_URL?.trim() || undefined;
+}
+
 export function isDatabaseConfigured(): boolean {
-  return Boolean(process.env.DATABASE_URL?.trim());
+  return Boolean(getDatabaseUrl());
 }
 
 export function getDb() {
-  const url = process.env.DATABASE_URL?.trim();
-  if (!url) throw new Error("DATABASE_URL is not configured");
+  const url = getDatabaseUrl();
+  if (!url) throw new Error("DATABASE_URL or POSTGRES_URL is not configured");
   if (!client) client = postgres(url, { max: 5, prepare: false });
   if (!database) database = drizzle(client, { schema });
   return database;
