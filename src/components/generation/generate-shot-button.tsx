@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { ShotDirectionDraft } from "@/domain/workspace/types";
-import { getLocalGenerations, getLocalProject, saveLocalGeneration } from "@/lib/local-project-store";
+import { getLocalAspectRatio, getLocalGenerations, saveLocalGeneration } from "@/lib/local-project-store";
 import type { GenerationViewItem } from "@/domain/generation/types";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -34,7 +34,7 @@ export function GenerateShotButton({
     setBusy(true);
     setLabel("생성 준비 중...");
     try {
-      const localProject = await getLocalProject(projectId);
+      const localAspectRatio = await getLocalAspectRatio(projectId);
       const response = await fetch("/api/generations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,7 +42,7 @@ export function GenerateShotButton({
           projectId,
           shotId,
           draft,
-          aspectRatio: localProject?.aspectRatio ?? aspectRatio,
+          aspectRatio: localAspectRatio ?? aspectRatio,
         }),
       });
       const submitted = await response.json().catch(() => ({})) as { id?: string; error?: string };

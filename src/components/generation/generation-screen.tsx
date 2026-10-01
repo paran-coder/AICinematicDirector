@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { GenerationViewItem } from "@/domain/generation/types";
 import {
+  getLocalAspectRatio,
   getLocalGenerations,
-  getLocalProject,
   getLocalShot,
   saveLocalGeneration,
   selectLocalGeneration,
@@ -58,9 +58,9 @@ export function GenerationScreen({ projectId }: { projectId: string }) {
     setBusyAction("regenerate");
     setNotice("같은 연출로 새 버전을 생성하고 있습니다.");
     try {
-      const [localShot, localProject] = await Promise.all([
+      const [localShot, localAspectRatio] = await Promise.all([
         getLocalShot(projectId, selected.shotRouteId),
-        getLocalProject(projectId),
+        getLocalAspectRatio(projectId),
       ]);
       const response = await fetch("/api/generations", {
         method: "POST",
@@ -69,7 +69,7 @@ export function GenerationScreen({ projectId }: { projectId: string }) {
           projectId,
           shotId: selected.shotRouteId,
           draft: localShot?.draft,
-          aspectRatio: localProject?.aspectRatio,
+          aspectRatio: localAspectRatio,
         }),
       });
       const body = await response.json().catch(() => ({})) as { id?: string; error?: string };

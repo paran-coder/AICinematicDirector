@@ -10,6 +10,7 @@ import {
   requestPersistentStorage,
   saveLocalProject,
   type LocalProjectDraft,
+  type ProjectAspectRatio,
 } from "@/lib/local-project-store";
 
 type SaveState = "loading" | "saved" | "saving" | "error";
@@ -22,10 +23,11 @@ function saveLabel(state: SaveState) {
 }
 
 export function ProjectScreen({ initial }: { initial: ProjectOverviewData }) {
+  const initialAspectRatio: ProjectAspectRatio = initial.aspectRatio === "9:16" || initial.aspectRatio === "1:1" ? initial.aspectRatio : "16:9";
   const initialForm: LocalProjectDraft = {
     story: initial.story,
     duration: initial.duration,
-    aspectRatio: initial.aspectRatio,
+    aspectRatio: initialAspectRatio,
     genre: initial.genre,
     visualDirection: initial.visualDirection,
   };
@@ -40,9 +42,13 @@ export function ProjectScreen({ initial }: { initial: ProjectOverviewData }) {
     void (async () => {
       try {
         await requestPersistentStorage();
-        const saved = await getLocalProject(initial.routeId);
+        const [saved, savedAspect] = await Promise.all([
+          getLocalProject(initial.routeId),
+          getLocalAspectRatio(initial.routeId),
+        ]);
         if (!active) return;
-        if (saved) setForm(saved);
+        if (saved) setForm({ ...saved, aspectRatio: savedAspect ?? saved.aspectRatio });
+        else if (savedAspect) setForm((current) => ({ ...current, aspectRatio: savedAspect }));
         setSaveState("saved");
       } catch {
         if (active) setSaveState("error");
@@ -58,7 +64,10 @@ export function ProjectScreen({ initial }: { initial: ProjectOverviewData }) {
     setSaveState("saving");
     const timer = window.setTimeout(async () => {
       try {
-        await saveLocalProject(initial.routeId, form);
+        await Promise.all([
+          saveLocalProject(initial.routeId, form),
+          saveLocalAspectRatio(initial.routeId, form.aspectRatio),
+        ]);
         setSaveState("saved");
       } catch {
         setSaveState("error");
@@ -66,6 +75,16 @@ export function ProjectScreen({ initial }: { initial: ProjectOverviewData }) {
     }, 700);
     return () => window.clearTimeout(timer);
   }, [form, hydrated, initial.routeId]);
+
+  useEffect(() => {
+    const onAspect = (event: Event) => {
+      const detail = (event as CustomEvent<{ projectId: string; aspectRatio: ProjectAspectRatio }>).detail;
+      if (!detail || detail.projectId !== initial.routeId) return;
+      setForm((current) => current.aspectRatio === detail.aspectRatio ? current : { ...current, aspectRatio: detail.aspectRatio });
+    };
+    window.addEventListener("acd:aspect-ratio", onAspect as EventListener);
+    return () => window.removeEventListener("acd:aspect-ratio", onAspect as EventListener);
+  }, [initial.routeId]);
 
   async function exportBackup() {
     try {

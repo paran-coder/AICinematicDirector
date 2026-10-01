@@ -11,10 +11,12 @@ type StoredRecord<T = unknown> = {
   updatedAt: string;
 };
 
+export type ProjectAspectRatio = "16:9" | "9:16" | "1:1";
+
 export type LocalProjectDraft = {
   story: string;
   duration: number;
-  aspectRatio: string;
+  aspectRatio: ProjectAspectRatio;
   genre: string;
   visualDirection: string;
 };
@@ -98,6 +100,7 @@ async function getAllRecords(): Promise<StoredRecord[]> {
 const projectKey = (projectId: string) => `project:${projectId}`;
 const shotKey = (projectId: string, shotId: string) => `shot:${projectId}:${shotId}`;
 const generationsKey = (projectId: string) => `generations:${projectId}`;
+const aspectKey = (projectId: string) => `aspect:${projectId}`;
 
 export async function requestPersistentStorage(): Promise<boolean | undefined> {
   if (typeof navigator === "undefined" || !navigator.storage?.persist) return undefined;
@@ -115,6 +118,17 @@ export function getLocalProject(projectId: string) {
 
 export function saveLocalProject(projectId: string, value: LocalProjectDraft) {
   return putRecord(projectKey(projectId), value);
+}
+
+export function getLocalAspectRatio(projectId: string) {
+  return getRecord<ProjectAspectRatio>(aspectKey(projectId));
+}
+
+export async function saveLocalAspectRatio(projectId: string, aspectRatio: ProjectAspectRatio): Promise<void> {
+  await putRecord(aspectKey(projectId), aspectRatio);
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("acd:aspect-ratio", { detail: { projectId, aspectRatio } }));
+  }
 }
 
 export function getLocalShot(projectId: string, shotId: string) {
@@ -153,7 +167,7 @@ export async function selectLocalGeneration(projectId: string, id: string, shotI
 
 export async function exportProjectBackup(projectId: string): Promise<LocalProjectBackup> {
   const all = await getAllRecords();
-  const prefixes = [projectKey(projectId), `shot:${projectId}:`, generationsKey(projectId)];
+  const prefixes = [projectKey(projectId), aspectKey(projectId), `shot:${projectId}:`, generationsKey(projectId)];
   const records = all.filter((record) => prefixes.some((prefix) => record.key === prefix || record.key.startsWith(prefix)));
   return {
     format: "ai-cinematic-director",
