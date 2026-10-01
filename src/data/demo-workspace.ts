@@ -55,6 +55,6 @@ export function createDemoWorkspace(routeProjectId = "demo", routeShotId = "shot
     props: [{ id: DEMO_IDS.prop, name: "cassette_player", canon: { geometry: "rectangular", material: "silver brushed metal", primary_color: "silver", core_design: "black buttons and upper-right scratch" } }],
     style: { global: ["cinematic realism", "muted cyan and amber", "subtle 35mm grain"], cameraLanguage: ["mostly eye-level", "slow controlled movement"] },
     consistency,
-    persistence: "fixture",
+    persistence: "local",
   };
 }

@@ -45,5 +45,5 @@ export type ShotWorkspaceData = {
   props: Array<{ id: string; name: string; canon: Record<string, unknown>; state?: Record<string, unknown> }>;
   style: { global: string[]; cameraLanguage: string[] };
   consistency: ConsistencySummary;
-  persistence: "database" | "fixture";
+  persistence: "local";
 };

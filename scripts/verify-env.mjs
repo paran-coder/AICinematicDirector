@@ -1,11 +1,11 @@
 const checks = [
-  ["DATABASE_URL", process.env.DATABASE_URL, "PostgreSQL persistence / migration / seed"],
   ["HF_API_KEY_ID", process.env.HF_API_KEY_ID, "Higgsfield live generation"],
   ["HF_API_KEY_SECRET", process.env.HF_API_KEY_SECRET, "Higgsfield live generation"],
   ["APP_URL", process.env.APP_URL, "Public image-to-video first-frame URL"],
 ];
 
 console.log("AI Cinematic Director RC environment check");
+console.log("✓ PERSISTENCE          IndexedDB (current browser, no server database)");
 for (const [name, value, purpose] of checks) {
   console.log(`${value ? "✓" : "○"} ${name.padEnd(18)} ${value ? "configured" : "not configured"} — ${purpose}`);
 }

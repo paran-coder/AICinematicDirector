@@ -87,3 +87,11 @@ html,body{height:100%;overflow:hidden}.app-shell{height:100dvh;min-height:0;disp
 .guide-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:34px 0 10px}.guide-footer>div{max-width:650px}.guide-footer strong{font-size:14px}.guide-footer p{margin:6px 0 0;color:var(--text-2);font-size:12px;line-height:1.6}.guide-primary-link{flex:0 0 auto;text-decoration:none}
 @media(max-width:1000px){.guide-layout{grid-template-columns:1fr;width:min(860px,calc(100% - 32px));padding-top:24px}.guide-nav{position:static}.guide-nav nav{grid-template-columns:repeat(2,minmax(0,1fr))}.guide-step-grid,.guide-shot-map,.guide-status-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.guide-layout{width:calc(100% - 24px);padding-bottom:48px}.guide-hero h1{font-size:29px}.guide-step-grid,.guide-info-grid,.guide-shot-map,.guide-status-grid{grid-template-columns:1fr}.guide-status-list>div{grid-template-columns:1fr;gap:6px}.guide-footer{align-items:stretch;flex-direction:column}.guide-primary-link{width:100%}.topbar-help-link{display:none}}
+
+/* Local-first persistence */
+.local-data-panel{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;margin-top:18px;padding:14px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}
+.local-data-panel strong{font-size:13px}.local-data-panel p{margin:5px 0 0;max-width:720px;color:var(--text-2);font-size:12px;line-height:1.55}
+.local-data-actions{display:flex;align-items:center;gap:8px}.compact-action{min-height:36px;margin:0;padding:0 12px;font-size:12px;white-space:nowrap}
+.local-data-notice{grid-column:1/-1;color:var(--text-2)}.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.autosave.is-error{color:var(--danger)}
+@media(max-width:760px){.local-data-panel{grid-template-columns:1fr}.local-data-actions{align-items:stretch;flex-direction:column}.compact-action{width:100%}}

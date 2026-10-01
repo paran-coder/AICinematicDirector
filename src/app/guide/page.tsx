@@ -19,6 +19,7 @@ const navItems = [
   ["consistency", "5. 일관성 검사"],
   ["generate", "6. 영상 생성"],
   ["autosave", "저장과 상태"],
+  ["backup", "백업과 복원"],
   ["prompt", "프롬프트 보기"],
   ["troubleshooting", "문제 해결"],
 ] as const;
@@ -196,11 +197,28 @@ export default function GuidePage() {
                 별도의 저장 버튼을 계속 누를 필요가 없습니다.
               </p>
               <div className="guide-status-list">
-                <div><code>저장 중...</code><p>변경 내용을 서버에 기록하고 있습니다.</p></div>
-                <div><code>자동 저장됨</code><p>현재 변경 사항이 저장되었습니다.</p></div>
+                <div><code>저장 중...</code><p>변경 내용을 이 브라우저의 IndexedDB에 기록하고 있습니다.</p></div>
+                <div><code>이 브라우저에 저장됨</code><p>현재 변경 사항이 이 기기의 현재 브라우저에 저장되었습니다.</p></div>
                 <div><code>저장하지 못했습니다</code><p>네트워크 또는 서버 문제가 있습니다. 입력한 내용은 화면에 유지되며 다시 시도할 수 있습니다.</p></div>
-                <div><code>변경 내용이 저장되지 않습니다</code><p>데이터베이스가 연결되지 않은 미리보기 상태입니다. 운영 환경에서는 관리자에게 DB 연결 상태를 확인해야 합니다.</p></div>
+                <div><code>저장하지 못했습니다</code><p>브라우저 저장 공간을 사용할 수 없거나 저장 중 오류가 발생했습니다. JSON 백업을 만들어 두는 것을 권장합니다.</p></div>
               </div>
+            </GuideSection>
+
+
+            <GuideSection id="backup" eyebrow="LOCAL FIRST" title="백업과 복원 — 서버 계정 없이 프로젝트를 옮깁니다">
+              <p>
+                v1.0.0은 별도의 외부 데이터베이스 계정을 사용하지 않습니다. 프로젝트와 샷 편집값, 생성 기록은
+                브라우저의 <strong>IndexedDB</strong>에 저장됩니다.
+              </p>
+              <div className="guide-callout">
+                <strong>중요: 로컬 저장은 현재 브라우저에만 존재합니다.</strong>
+                <p>다른 컴퓨터나 다른 브라우저에는 자동으로 동기화되지 않으며, 브라우저의 사이트 데이터를 삭제하면 함께 지워질 수 있습니다.</p>
+              </div>
+              <p>
+                프로젝트 화면의 <strong>백업 내보내기</strong>를 누르면 편집 데이터를 JSON 파일로 저장할 수 있습니다.
+                다른 환경에서는 <strong>백업 가져오기</strong>로 같은 프로젝트의 데이터를 복원할 수 있습니다.
+                영상 파일 자체는 JSON에 포함되지 않고 생성 결과 URL과 메타데이터만 기록됩니다.
+              </p>
             </GuideSection>
 
             <GuideSection id="prompt" eyebrow="ADVANCED" title="프롬프트는 필요할 때만 봅니다">
@@ -216,7 +234,7 @@ export default function GuidePage() {
 
             <GuideSection id="troubleshooting" eyebrow="HELP" title="문제가 생겼을 때">
               <div className="guide-faq">
-                <details><summary>새로고침했더니 수정 내용이 사라졌습니다.</summary><p>하단에 ‘변경 내용이 저장되지 않습니다’가 보이는지 확인하세요. 보인다면 데이터베이스가 아직 연결되지 않은 상태입니다.</p></details>
+                <details><summary>수정 내용이 사라졌습니다.</summary><p>동일한 브라우저와 동일한 사이트 주소인지 확인하세요. 브라우저 사이트 데이터를 삭제했거나 다른 기기에서 접속한 경우 로컬 데이터가 보이지 않습니다. 프로젝트 화면의 JSON 백업이 있다면 가져오기로 복원할 수 있습니다.</p></details>
                 <details><summary>캐릭터 외형을 바꿨는데 다시 원래대로 돌아옵니다.</summary><p>프로젝트 전체의 기준 Identity로 보호되는 항목일 수 있습니다. 장면 변화가 필요하다면 새 캐릭터가 아니라 State나 장면 범위 설정을 사용하세요.</p></details>
                 <details><summary>첫 프레임에서는 영상이 재생되지 않습니다.</summary><p>정상입니다. 첫 프레임은 생성 전 기준 이미지입니다. 생성된 영상은 ‘생성 결과’ 탭에서 확인합니다.</p></details>
                 <details><summary>같은 설정인데 생성 결과가 다릅니다.</summary><p>생성 모델은 같은 연출에서도 미세한 변형을 만들 수 있습니다. 결과를 버전으로 비교하고 가장 적합한 결과를 선택하세요.</p></details>
