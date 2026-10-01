@@ -5,9 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import type { ProjectOverviewData } from "@/data/project-repository";
 import {
   downloadProjectBackup,
+  getLocalAspectRatio,
   getLocalProject,
   importProjectBackup,
   requestPersistentStorage,
+  saveLocalAspectRatio,
   saveLocalProject,
   type LocalProjectDraft,
   type ProjectAspectRatio,
@@ -113,7 +115,7 @@ export function ProjectScreen({ initial }: { initial: ProjectOverviewData }) {
     <label className="stack-field">스토리 아이디어<textarea value={form.story} onChange={(event)=>setForm({...form,story:event.target.value})}/></label>
     <div className="option-grid">
       <label>영상 길이<select value={form.duration} onChange={(event)=>setForm({...form,duration:Number(event.target.value)})}><option value={15}>15초</option><option value={30}>30초</option><option value={60}>60초</option></select></label>
-      <label>화면 비율<select value={form.aspectRatio} onChange={(event)=>setForm({...form,aspectRatio:event.target.value})}><option>16:9</option><option>9:16</option><option>1:1</option></select></label>
+      <label>화면 비율<select value={form.aspectRatio} onChange={(event)=>setForm({...form,aspectRatio:event.target.value as ProjectAspectRatio})}><option>16:9</option><option>9:16</option><option>1:1</option></select></label>
       <label>장르<input value={form.genre} onChange={(event)=>setForm({...form,genre:event.target.value})}/></label>
       <label>비주얼 방향<input value={form.visualDirection} onChange={(event)=>setForm({...form,visualDirection:event.target.value})}/></label>
     </div>
