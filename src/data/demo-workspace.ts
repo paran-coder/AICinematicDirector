@@ -48,7 +48,7 @@ export function createDemoWorkspace(routeProjectId = "demo", routeShotId = "shot
   return {
     project: { id: DEMO_IDS.project, routeId: routeProjectId, name: demoProject.name, aspectRatio: demoProject.aspectRatio },
     scene: { id: DEMO_IDS.scene3, title: "오래된 상점", order: 3, description: "Mina가 오래된 상점에 들어가 카세트 플레이어를 발견한다.", environment: sceneEnvironment },
-    shot: { id: shotIdMap[selectedIndex] ?? DEMO_IDS.shot2, routeId: routeShotId, title: selected.title, description: selected.description, duration: selected.duration, firstFrameUrl: selected.image, draft, rawOverrides },
+    shot: { id: shotIdMap[selectedIndex] ?? DEMO_IDS.shot2, routeId: routeShotId, title: selected.title, description: selected.description, duration: selected.duration, firstFrameUrl: routeShotId === "shot-02" ? "/fixtures/mina-old-shop-main.jpg" : selected.image, draft, rawOverrides },
     shots: demoProject.shots.map((shot, index) => ({ id: shotIdMap[index], routeId: routeIdMap[index], order: shot.order, title: shot.title, description: shot.description, duration: shot.duration, image: shot.image })),
     character: { id: DEMO_IDS.character, name: "Mina", canon: DEMO_CHARACTER_CANON, sceneOverrides, sceneStates: DEMO_SCENE_STATES },
     location: { id: DEMO_IDS.location, name: "오래된 상점", canon: { architecture: { type: "narrow antique shop", walls: "dark wood" }, fixed_landmarks: ["green hanging lamp", "wooden shelves"] } },

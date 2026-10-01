@@ -50,7 +50,7 @@ export function ShotEditor({ initial }: { initial: ShotWorkspaceData }) {
     <BrowserPanel projectId={initial.project.routeId} scene={initial.scene} shots={initial.shots} selectedShotId={initial.shot.routeId}/>
     <section className="canvas-panel">
       <WorkspaceHeader title={`샷 ${String(initial.shot.routeId.match(/\d+/)?.[0] ?? initial.shot.routeId).padStart(2,"0")}  ${draft.shotSize}`} description={draft.action}/>
-      <PreviewSurface image={initial.shot.firstFrameUrl} duration={initial.shot.duration}/>
+      <PreviewSurface image={initial.shot.firstFrameUrl} duration={initial.shot.duration} draft={draft}/>
     </section>
     <Inspector draft={draft} onChange={update}/>
   </div><ConsistencyBar consistency={consistency} saveState={saveState} projectId={initial.project.routeId} shotId={initial.shot.routeId}/></main>;

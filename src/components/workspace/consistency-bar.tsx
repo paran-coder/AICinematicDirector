@@ -7,7 +7,7 @@ type SaveState = "saved" | "saving" | "error" | "fixture";
 function saveLabel(state: SaveState) {
   if (state === "saving") return "저장 중...";
   if (state === "error") return "저장하지 못했습니다";
-  if (state === "fixture") return "미리보기 모드 · DB 미연결";
+  if (state === "fixture") return "변경 내용이 저장되지 않습니다";
   return "✓ 자동 저장됨";
 }
 
