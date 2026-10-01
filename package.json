@@ -1,0 +1,51 @@
+{
+  "name": "ai-cinematic-director",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "verify:consistency": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/verify-consistency.ts",
+    "verify:provider": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/verify-prompt-provider.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' src/db/seed.ts",
+    "verify:integration": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/verify-integration.ts",
+    "verify:env": "node scripts/verify-env.mjs",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "rc:verify": "npm run verify:env && npm run typecheck && npm run verify:consistency && npm run verify:provider && npm run verify:integration && npm run build",
+    "verify:db": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/verify-db.ts",
+    "verify:higgsfield-live": "ts-node --transpile-only --compiler-options '{\"module\":\"CommonJS\",\"moduleResolution\":\"node\",\"target\":\"ES2022\"}' scripts/verify-higgsfield-live.ts",
+    "rc:verify:db": "npm run db:migrate && npm run db:seed && npm run verify:db"
+  },
+  "dependencies": {
+    "next": "16.3.8",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "next-themes": "latest",
+    "zustand": "latest",
+    "@tanstack/react-query": "latest",
+    "zod": "latest",
+    "drizzle-orm": "latest",
+    "postgres": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "tailwindcss": "^4.3.0",
+    "@tailwindcss/postcss": "^4.3.0",
+    "vitest": "latest",
+    "@testing-library/react": "latest",
+    "@playwright/test": "latest",
+    "drizzle-kit": "latest",
+    "@biomejs/biome": "latest",
+    "ts-node": "latest"
+  }
+}
