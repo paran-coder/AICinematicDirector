@@ -1,2 +1,5 @@
 import { redirect } from "next/navigation";
-export default function HomePage(){redirect("/projects/demo/shots/shot-02")}
+
+export default function HomePage() {
+  redirect("/projects/demo");
+}

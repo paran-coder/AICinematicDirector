@@ -13,7 +13,7 @@ const items = [
 export function AppRail({ active = "shot" }: { active?: string }) {
   return (
     <nav className="app-rail" aria-label="주요 탐색">
-      <div className="app-mark" aria-hidden="true">A</div>
+      <Link className="app-mark" href="/" aria-label="홈으로 이동">A</Link>
       <div className="rail-items">
         {items.map(({ id, label, Icon, href }) => (
           <Link key={id} href={href} className={cn("rail-item", active === id && "is-active")} aria-current={active === id ? "page" : undefined}>
