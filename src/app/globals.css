@@ -343,3 +343,136 @@ html,body{height:100%;overflow:hidden}.app-shell{height:100dvh;min-height:0;disp
   font-weight:500;
   color:var(--text-2);
 }
+
+/* Character creation */
+.character-card-button{
+  width:100%;
+  font:inherit;
+  color:inherit;
+  text-align:left;
+  cursor:pointer;
+}
+.character-card-button>span:last-child{
+  display:grid;
+  align-content:center;
+  gap:4px;
+  min-width:0;
+}
+.character-card-button small{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.character-avatar-fallback{
+  width:72px;
+  height:72px;
+  display:grid;
+  place-items:center;
+  border-radius:7px;
+  background:var(--surface-2);
+  color:var(--text-2);
+  font-size:22px;
+  font-weight:700;
+}
+.character-empty-preview{
+  min-height:420px;
+  display:grid;
+  justify-items:center;
+  align-content:center;
+  gap:9px;
+  margin-top:18px;
+  border:1px dashed var(--border-strong);
+  border-radius:10px;
+  background:var(--surface-2);
+  text-align:center;
+}
+.character-empty-avatar{
+  width:68px;
+  height:68px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  font-size:24px;
+  font-weight:700;
+}
+.character-empty-preview strong{font-size:15px}
+.character-empty-preview p{
+  max-width:420px;
+  margin:0;
+  color:var(--text-2);
+  font-size:12px;
+  line-height:1.6;
+}
+.character-dialog-backdrop{
+  position:fixed;
+  z-index:120;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  background:rgba(15,23,42,.32);
+}
+.character-dialog{
+  width:min(440px,100%);
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface);
+  box-shadow:0 20px 60px rgba(15,23,42,.2);
+  padding:18px;
+}
+.character-dialog-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:14px;
+}
+.character-dialog-header h2{
+  margin:4px 0 0;
+  font-size:18px;
+}
+.character-dialog form{display:grid;gap:12px}
+.character-dialog label{
+  display:grid;
+  gap:6px;
+  font-size:12px;
+  font-weight:500;
+  color:var(--text-2);
+}
+.character-dialog label>span{
+  margin-left:4px;
+  color:var(--text-3);
+  font-size:10px;
+  font-weight:400;
+}
+.character-dialog input,
+.character-dialog textarea{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--surface);
+  color:var(--text);
+  padding:10px 11px;
+  font-size:13px;
+}
+.character-dialog textarea{
+  min-height:86px;
+  resize:vertical;
+}
+.character-form-error{
+  margin:0;
+  color:var(--danger);
+  font-size:11px;
+}
+.character-dialog-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:4px;
+}
+.character-dialog-actions .secondary-action{
+  margin:0;
+  padding:0 14px;
+}

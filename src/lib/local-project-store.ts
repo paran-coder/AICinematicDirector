@@ -21,6 +21,14 @@ export type LocalProjectDraft = {
   visualDirection: string;
 };
 
+export type LocalCharacter = {
+  id: string;
+  name: string;
+  age?: number;
+  description: string;
+  createdAt: string;
+};
+
 export type LocalShotRecord = {
   draft: ShotDirectionDraft;
   rawOverrides: Record<string, unknown>;
@@ -101,6 +109,7 @@ const projectKey = (projectId: string) => `project:${projectId}`;
 const shotKey = (projectId: string, shotId: string) => `shot:${projectId}:${shotId}`;
 const generationsKey = (projectId: string) => `generations:${projectId}`;
 const aspectKey = (projectId: string) => `aspect:${projectId}`;
+const charactersKey = (projectId: string) => `characters:${projectId}`;
 
 export async function requestPersistentStorage(): Promise<boolean | undefined> {
   if (typeof navigator === "undefined" || !navigator.storage?.persist) return undefined;
@@ -129,6 +138,17 @@ export async function saveLocalAspectRatio(projectId: string, aspectRatio: Proje
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent("acd:aspect-ratio", { detail: { projectId, aspectRatio } }));
   }
+}
+
+export async function getLocalCharacters(projectId: string): Promise<LocalCharacter[]> {
+  return (await getRecord<LocalCharacter[]>(charactersKey(projectId))) ?? [];
+}
+
+export async function addLocalCharacter(projectId: string, character: LocalCharacter): Promise<LocalCharacter[]> {
+  const current = await getLocalCharacters(projectId);
+  const next = [...current, character];
+  await putRecord(charactersKey(projectId), next);
+  return next;
 }
 
 export function getLocalShot(projectId: string, shotId: string) {
@@ -167,7 +187,7 @@ export async function selectLocalGeneration(projectId: string, id: string, shotI
 
 export async function exportProjectBackup(projectId: string): Promise<LocalProjectBackup> {
   const all = await getAllRecords();
-  const prefixes = [projectKey(projectId), aspectKey(projectId), `shot:${projectId}:`, generationsKey(projectId)];
+  const prefixes = [projectKey(projectId), aspectKey(projectId), charactersKey(projectId), `shot:${projectId}:`, generationsKey(projectId)];
   const records = all.filter((record) => prefixes.some((prefix) => record.key === prefix || record.key.startsWith(prefix)));
   return {
     format: "ai-cinematic-director",
