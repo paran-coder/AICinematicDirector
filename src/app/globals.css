@@ -476,3 +476,33 @@ html,body{height:100%;overflow:hidden}.app-shell{height:100dvh;min-height:0;disp
   margin:0;
   padding:0 14px;
 }
+
+/* Brand version */
+.brand{
+  gap:7px;
+}
+.brand-name{
+  line-height:1;
+}
+.brand-version{
+  display:inline-flex;
+  align-items:center;
+  min-height:20px;
+  padding:0 7px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:var(--surface-2);
+  color:var(--text-3);
+  font-size:10px;
+  font-weight:650;
+  line-height:1;
+  letter-spacing:.01em;
+  font-variant-numeric:tabular-nums;
+}
+.brand:hover .brand-version{
+  border-color:color-mix(in srgb,var(--accent) 28%,var(--border));
+  color:var(--accent);
+}
+@media(max-width:760px){
+  .brand-version{display:none}
+}

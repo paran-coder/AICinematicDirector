@@ -1,4 +1,5 @@
 import Link from "next/link";
+import packageInfo from "../../../package.json";
 import { AppRail } from "./app-rail";
 import { Breadcrumb } from "./breadcrumb";
 import { TopbarControls } from "./topbar-controls";
@@ -17,8 +18,9 @@ export function AppShell({
   return (
     <div className="app-shell">
       <header className="topbar">
-        <Link className="brand" href="/" aria-label="AI Cinematic Director 홈">
-          AI Cinematic Director
+        <Link className="brand" href="/" aria-label={`AI Cinematic Director v${packageInfo.version} 홈`}>
+          <span className="brand-name">AI Cinematic Director</span>
+          <span className="brand-version">v{packageInfo.version}</span>
         </Link>
         <Breadcrumb items={crumbs} />
         <TopbarControls active={active} showAspect={showAspect} />
